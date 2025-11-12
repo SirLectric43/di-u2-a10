@@ -2,20 +2,25 @@ import { useState } from "react";
 import Background from "./Background.js";
 import Box from "./Box.js";
 
-const initialPosition = {
+const initialPosition = Object.freeze({
   x: 0,
   y: 0,
-};
+});
 
 export default function Canvas() {
   const [shape, setShape] = useState({
     color: "orange",
-    position: initialPosition,
+    position: { ...initialPosition },
   });
 
   function handleMove(dx, dy) {
-    shape.position.x += dx;
-    shape.position.y += dy;
+    setShape({
+      ...shape,
+      position: {
+        x: shape.position.x + dx,
+        y: shape.position.y + dy,
+      },
+    });
   }
 
   function handleColorChange(e) {
